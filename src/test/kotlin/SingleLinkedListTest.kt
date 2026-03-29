@@ -85,14 +85,16 @@ class SingleLinkedListTest {
         }
     }
 
+    @Test
     fun `indexOf works`() {
         list.add(10)
         list.add(20)
         list.add(30)
 
-        assertEquals(2, list.indexOf(20))
+        assertEquals(2, list.indexOf(30))
     }
 
+    @Test
     fun `set works`() {
         list.add(10)
         list.add(20)
@@ -100,5 +102,38 @@ class SingleLinkedListTest {
 
         list[2] = 5
         assertEquals(5, list[2])
+    }
+
+    @Test
+    fun `addFirst changes first element`() {
+        list.add(10)
+        list.add(20)
+        list.addFirst(5)
+
+        assertEquals(3, list.size)
+        assertEquals(5, list[0])
+        assertEquals(10, list[1])
+    }
+
+    @Test
+    fun `indexOf returns correct position`() {
+        list.add(10)
+        list.add(20)
+        list.add(30)
+
+        assertEquals(0, list.indexOf(10))
+        assertEquals(1, list.indexOf(20))
+        assertEquals(2, list.indexOf(30))
+    }
+
+    @Test
+    fun `set changes element at index`() {
+        list.add(10)
+        list.add(20)
+        list.add(30)
+
+        list[1] = 200
+        assertEquals(200, list[1])
+        assertEquals(3, list.size)
     }
 }

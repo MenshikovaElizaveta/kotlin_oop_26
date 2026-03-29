@@ -5,40 +5,44 @@ class SingleLinkedList : CustomList {
     private val inner = mutableListOf<Int>()
 
     override val size: Int
-        get() = TODO("Implement this")
+        get() = inner.size
 
     override fun add(element: Int) {
-        TODO("Implement this")
+        inner.add(element)
     }
 
     override operator fun set(index: Int, value: Int) {
-        TODO("Implement this")
+        inner[index] = value
     }
 
     override fun addFirst(element: Int) {
-        TODO("Implement this")
+        inner.add(0, element)
     }
 
     override operator fun get(index: Int): Int {
-        TODO("Implement this")
+        return inner[index]
     }
 
+
     override fun indexOf(element: Int): Int {
-        TODO("Implement this")
+        return inner.indexOf(element)
     }
 
     override fun remove(element: Int): Boolean {
-        TODO("Implement this")
+        return inner.remove(element)
     }
 
     override fun iterator(): Iterator<Int> {
         return object : Iterator<Int> {
+            private var currentIndex = 0
+
             override fun hasNext(): Boolean {
-                TODO("Implement this")
+                return currentIndex < inner.size
             }
 
             override fun next(): Int {
-                TODO("Implement this")
+                if (!hasNext()) throw NoSuchElementException()
+                return inner[currentIndex++]
             }
         }
     }
