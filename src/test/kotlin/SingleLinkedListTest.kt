@@ -105,35 +105,40 @@ class SingleLinkedListTest {
     }
 
     @Test
-    fun `addFirst changes first element`() {
-        list.add(10)
-        list.add(20)
-        list.addFirst(5)
+    fun `remove single element results in empty list`() {
+        list.add(42)
+        assertEquals(1, list.size)
+        assertTrue(list.remove(42))
 
-        assertEquals(3, list.size)
-        assertEquals(5, list[0])
-        assertEquals(10, list[1])
+        assertEquals(0, list.size)
+        assertFalse(list.contains(42))
+        assertThrows(IndexOutOfBoundsException::class.java) {
+            list[0]
+        }
     }
 
     @Test
-    fun `indexOf returns correct position`() {
-        list.add(10)
-        list.add(20)
-        list.add(30)
+    fun `addFirst into empty list initializes head correctly`() {
+        assertEquals(0, list.size)
+        list.addFirst(100)
 
-        assertEquals(0, list.indexOf(10))
-        assertEquals(1, list.indexOf(20))
-        assertEquals(2, list.indexOf(30))
+        assertEquals(1, list.size)
+        assertEquals(100, list[0])
+        assertTrue(list.contains(100))
     }
 
     @Test
-    fun `set changes element at index`() {
-        list.add(10)
-        list.add(20)
-        list.add(30)
+    fun `set and get on last index boundary`() {
+        list.add(1)
+        list.add(2)
+        list.add(3)
 
-        list[1] = 200
-        assertEquals(200, list[1])
+        assertEquals(3, list[2])
+        list[2] = 99
+
+        assertEquals(99, list[2])
         assertEquals(3, list.size)
+        assertEquals(1, list[0])
+        assertEquals(2, list[1])
     }
 }
