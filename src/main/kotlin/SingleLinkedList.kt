@@ -2,43 +2,102 @@ package org.example
 
 class SingleLinkedList : CustomList {
 
-    private val inner = mutableListOf<Int>()
+    private class Node(var value: Int, var next: Node? = null)
+
+    private var head: Node? = null
+    private var _size: Int = 0
 
     override val size: Int
-        get() = TODO("Implement this")
+        get() = _size
 
     override fun add(element: Int) {
-        TODO("Implement this")
+        if (head == null) {
+            head = Node(element)
+        } else {
+            var current: Node? = head
+            while (current?.next != null) {
+                current = current.next
+            }
+            current?.next = Node(element)
+        }
+        _size++
     }
 
     override operator fun set(index: Int, value: Int) {
-        TODO("Implement this")
+        if (index < 0 || index >= _size) {
+            throw IndexOutOfBoundsException("Index: $index, Size: $_size")
+        }
+        var current: Node? = head
+        for (i in 0 until index) {
+            current = current?.next
+        }
+        current?.value = value
     }
 
     override fun addFirst(element: Int) {
-        TODO("Implement this")
+        head = Node(element, head)
+        _size++
     }
 
     override operator fun get(index: Int): Int {
-        TODO("Implement this")
+        if (index < 0 || index >= _size) {
+            throw IndexOutOfBoundsException("Index: $index, Size: $_size")
+        }
+        var current = head
+        for (i in 0 until index) {
+            current = current?.next
+        }
+        return current?.value ?: throw IndexOutOfBoundsException("The structure of the list is damaged")
     }
 
+
     override fun indexOf(element: Int): Int {
-        TODO("Implement this")
+        var current = head
+        var index = 0
+        while (current != null) {
+            if (current.value == element) {
+                return index
+            }
+            current = current.next
+            index++
+        }
+        return -1
     }
 
     override fun remove(element: Int): Boolean {
-        TODO("Implement this")
+        val headNode = head ?: return false
+        if (headNode.value == element) {
+            head = headNode.next
+            _size--
+            return true
+        }
+
+
+        var current: Node? = head
+        while (current?.next != null) {
+            if (current.next?.value == element) {
+                current.next = current.next?.next
+                _size--
+                return true
+            }
+            current = current.next
+        }
+        return false
     }
 
     override fun iterator(): Iterator<Int> {
         return object : Iterator<Int> {
+            private var current: Node? = head
+
             override fun hasNext(): Boolean {
-                TODO("Implement this")
+                return current != null
             }
 
             override fun next(): Int {
-                TODO("Implement this")
+                if (!hasNext()) throw NoSuchElementException()
+                val value = current?.value ?: throw NoSuchElementException()
+                current = current?.next
+                return value
             }
         }
     }
